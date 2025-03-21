@@ -77,5 +77,11 @@ def feedback():
 
     return render_template("thank_you.html")
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if os.environ.get("STREAMLIT_IS_RUNNING") != "true":  # Verifica si NO estás en Streamlit Cloud
+    import signal
+    import sys
+
+    signal.signal(signal.SIGTERM, lambda *args: sys.exit(0))
+
+if __name__ == '__main__':
+    app.run()  # Sin debug=True
